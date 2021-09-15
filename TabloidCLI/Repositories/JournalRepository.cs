@@ -45,7 +45,35 @@ namespace TabloidCLI
 
         public Journal Get(int id)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"";
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    Journal journal = null;
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (journal == null)
+                        {
+                            journal = new Journal()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Title = reader.GetString(reader.GetOrdinal("Title")),
+                                Content = reader.GetString(reader.GetOrdinal("Content")),
+                                CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime"))
+                            };
+                        }
+
+                        reader.Close();
+                        return journal;
+                    }
+                }
+            }
         }
 
         public void Insert(Journal journal)
@@ -55,7 +83,15 @@ namespace TabloidCLI
 
         public void Update(Journal journal)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "";
+                    cmd.Parameters.AddWithValue("@Title", journal.Title);
+                }
+            }
         }
 
         public void Delete(int id)
