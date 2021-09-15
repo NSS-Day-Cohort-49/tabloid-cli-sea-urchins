@@ -24,6 +24,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine("Journal Management Menu");
             Console.WriteLine(" 1) List Journals");
             Console.WriteLine(" 2) Edit A Journal Entry");
+            Console.WriteLine(" 3) Delete A Journal Entry");
             Console.WriteLine(" 0) Go Back");
 
 
@@ -36,6 +37,9 @@ namespace TabloidCLI.UserInterfaceManagers
                     return this;
                 case "2":
                     Edit();
+                    return this;
+                case "3":
+                    Remove();
                     return this;
                 case "0":
                     return _parentUI;
@@ -110,7 +114,15 @@ namespace TabloidCLI.UserInterfaceManagers
             _journalRepository.Update(journalToEdit);
 
         }
+
+        private void Remove()
+        {
+            Journal journalToDelete = Choose("Which journal would you like to remove?");
+            if (journalToDelete != null)
+            {
+                _journalRepository.Delete(journalToDelete.Id);
+            }
+        }
+
     }
-
-
 }
