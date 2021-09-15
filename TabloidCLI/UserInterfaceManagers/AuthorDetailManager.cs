@@ -9,7 +9,7 @@ namespace TabloidCLI.UserInterfaceManagers
     {
         private IUserInterfaceManager _parentUI;
         private AuthorRepository _authorRepository;
-        private PostRepository _postRepository;
+        private PostRepository _PostRepository;
         private TagRepository _tagRepository;
         private int _authorId;
 
@@ -17,7 +17,7 @@ namespace TabloidCLI.UserInterfaceManagers
         {
             _parentUI = parentUI;
             _authorRepository = new AuthorRepository(connectionString);
-            _postRepository = new PostRepository(connectionString);
+            _PostRepository = new PostRepository(connectionString);
             _tagRepository = new TagRepository(connectionString);
             _authorId = authorId;
         }
@@ -71,10 +71,10 @@ namespace TabloidCLI.UserInterfaceManagers
 
         private void ViewBlogPosts()
         {
-            List<Post> posts = _postRepository.GetByAuthor(_authorId);
-            foreach (Post post in posts)
+            List<Post> Posts = _PostRepository.GetByAuthor(_authorId);
+            foreach (Post Post in Posts)
             {
-                Console.WriteLine(post);
+                Console.WriteLine(Post);
             }
             Console.WriteLine();
         }

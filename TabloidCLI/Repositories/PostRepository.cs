@@ -44,10 +44,10 @@ namespace TabloidCLI.Repositories
                     cmd.Parameters.AddWithValue("@authorId", authorId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
-                    List<Post> posts = new List<Post>();
+                    List<Post> Posts = new List<Post>();
                     while (reader.Read())
                     {
-                        Post post = new Post()
+                        Post Post = new Post()
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             Title = reader.GetString(reader.GetOrdinal("PostTitle")),
@@ -67,22 +67,22 @@ namespace TabloidCLI.Repositories
                                 Url = reader.GetString(reader.GetOrdinal("BlogUrl")),
                             }
                         };
-                        posts.Add(post);
+                        Posts.Add(Post);
                     }
 
                     reader.Close();
 
-                    return posts;
+                    return Posts;
                 }
             }
         }
 
-        public void Insert(Post post)
+        public void Insert(Post Post)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(Post post)
+        public void Update(Post Post)
         {
             throw new NotImplementedException();
         }
