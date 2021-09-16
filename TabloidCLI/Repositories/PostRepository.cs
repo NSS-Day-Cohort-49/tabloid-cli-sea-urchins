@@ -70,9 +70,8 @@ namespace TabloidCLI.Repositories
                                                b.Title AS BlogTitle,
                                                b.URL AS BlogUrl,
                                                t.Id AS TagId,
-                                               t.Name,
-                                               pt.IsDeleted AS PTIsDeleted
-                                          FROM Post p 
+                                               t.Name
+                                               FROM Post p 
                                                LEFT JOIN Author a on p.AuthorId = a.Id
                                                LEFT JOIN Blog b on p.BlogId = b.Id 
                                                LEFT JOIN PostTag pt on p.Id = pt.PostId
