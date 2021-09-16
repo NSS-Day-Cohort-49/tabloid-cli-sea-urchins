@@ -82,11 +82,6 @@ namespace TabloidCLI
             }
         }
 
-        public void Insert(Journal journal)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Update(Journal journal)
         {
             using (SqlConnection conn = Connection)
@@ -104,6 +99,23 @@ namespace TabloidCLI
                     cmd.Parameters.AddWithValue("@createDateTime", journal.CreateDateTime);
                     cmd.Parameters.AddWithValue("@id", journal.Id);
 
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void Insert(Journal journal)
+        {
+            using(SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "INSERT INTO Journal (Title, Content, CreateDateTime)" + 
+                        "VALUES (@Title, @Content, @CreateDateTime)";
+                    cmd.Parameters.AddWithValue("@Title", journal.Title);
+                    cmd.Parameters.AddWithValue("@Content", journal.Content);
+                    cmd.Parameters.AddWithValue("@CreateDateTime", journal.CreateDateTime);
                     cmd.ExecuteNonQuery();
                 }
             }
