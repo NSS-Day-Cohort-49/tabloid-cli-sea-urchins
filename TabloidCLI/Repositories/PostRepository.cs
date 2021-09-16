@@ -70,9 +70,8 @@ namespace TabloidCLI.Repositories
                                                b.Title AS BlogTitle,
                                                b.URL AS BlogUrl,
                                                t.Id AS TagId,
-                                               t.Name,
-                                               pt.IsDeleted AS PTIsDeleted
-                                          FROM Post p 
+                                               t.Name
+                                               FROM Post p 
                                                LEFT JOIN Author a on p.AuthorId = a.Id
                                                LEFT JOIN Blog b on p.BlogId = b.Id 
                                                LEFT JOIN PostTag pt on p.Id = pt.PostId
@@ -260,5 +259,41 @@ namespace TabloidCLI.Repositories
                 }
             }
         }
+
+        public void InsertTag(Post post, Tag tag)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"INSERT INTO PostTag (PostId, TagId)
+                                                       VALUES (@postId, @tagId)";
+                    cmd.Parameters.AddWithValue("@postId", post.Id);
+                    cmd.Parameters.AddWithValue("@tagId", tag.Id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void DeleteTag(int postId, int tagId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE FROM PostTag 
+                                         WHERE PostId = @postid AND 
+                                               TagId = @tagId";
+                    cmd.Parameters.AddWithValue("@postId", postId);
+                    cmd.Parameters.AddWithValue("@tagId", tagId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
+    
+

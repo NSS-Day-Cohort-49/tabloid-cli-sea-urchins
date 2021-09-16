@@ -52,7 +52,7 @@ namespace TabloidCLI.UserInterfaceManagers
                     }
                     else
                     {
-                        return this;
+                        return new PostDetailManager(this, _connectionString, post.Id); ;
                     }
                 case "3":
                     Add();
