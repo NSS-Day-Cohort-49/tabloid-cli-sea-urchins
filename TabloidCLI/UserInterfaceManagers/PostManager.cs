@@ -116,7 +116,7 @@ namespace TabloidCLI.UserInterfaceManagers
             bool enteringAuthor = true;
             while (enteringAuthor)
             {
-                Console.WriteLine("Choose an Author:");
+                Console.WriteLine("Choose an Author: ");
 
                 for (int i = 0; i < authors.Count; i++)
                 {
