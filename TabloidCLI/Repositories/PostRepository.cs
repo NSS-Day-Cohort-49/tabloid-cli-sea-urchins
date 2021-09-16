@@ -237,9 +237,7 @@ namespace TabloidCLI.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"UPDATE Post
-                                            SET IsDeleted = 1
-                                            WHERE id = @id";
+                    cmd.CommandText = @"DELETE FROM Post WHERE id = @id";
                     cmd.Parameters.AddWithValue("@id", id);
 
                     cmd.ExecuteNonQuery();
@@ -247,9 +245,7 @@ namespace TabloidCLI.Repositories
 
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"UPDATE PostTag
-                                            SET IsDeleted = 1
-                                            WHERE PostId = @id";
+                    cmd.CommandText = @"DELETE FROM PostTag WHERE id = @id";
                     cmd.Parameters.AddWithValue("@id", id);
 
                     cmd.ExecuteNonQuery();
@@ -257,9 +253,7 @@ namespace TabloidCLI.Repositories
 
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"UPDATE Note
-                                            SET IsDeleted = 1
-                                            WHERE PostId = @id";
+                    cmd.CommandText = @"DELETE FROM Note WHERE id = @id";
                     cmd.Parameters.AddWithValue("@id", id);
 
                     cmd.ExecuteNonQuery();

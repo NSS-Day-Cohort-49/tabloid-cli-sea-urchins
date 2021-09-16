@@ -91,31 +91,32 @@ namespace TabloidCLI.UserInterfaceManagers
             Blog postBlog = null;
             DateTime postDate = new DateTime();
             Console.Clear();
-            string postTitle = StringPrompt("Post title: ");
+            string postTitle = StringPrompt("Enter the post title: ");
             Console.Clear();
-            string postUrl = StringPrompt("Post url: ");
+            string postUrl = StringPrompt("Enter the post url: ");
 
             bool enteringDate = true;
             while (enteringDate)
             {
-                Console.Write("Post publication date (mm/dd/yyyy): ");
-                string dateInput = Console.ReadLine();
+                Console.Write("Enter the post date. Use this formatting: (mm/dd/yyyy): ");
+                string date = Console.ReadLine();
                 try
                 {
-                    postDate = DateTime.Parse(dateInput);
-                    enteringDate = false;
+                    postDate = DateTime.Parse(date);
+                    break;
+                   
                 }
-                catch (Exception ex)
+                catch (Exception x)
                 {
                     Console.Clear();
-                    Console.WriteLine("Invalid date");
+                    Console.WriteLine("Invalid Selection");
                 }
             }
 
             bool enteringAuthor = true;
             while (enteringAuthor)
             {
-                Console.WriteLine("Please choose the post's Author:");
+                Console.WriteLine("Choose an Author:");
 
                 for (int i = 0; i < authors.Count; i++)
                 {
@@ -128,9 +129,9 @@ namespace TabloidCLI.UserInterfaceManagers
                     Console.Clear();
                     int choice = int.Parse(input);
                     postAuthor = authors.Find(a => a.Id == choice);
-                    enteringAuthor = false;
+                    break;
                 }
-                catch (Exception ex)
+                catch (Exception x)
                 {
                     Console.Clear();
                     Console.WriteLine("Invalid Selection");
@@ -140,7 +141,7 @@ namespace TabloidCLI.UserInterfaceManagers
             bool enteringBlog = true;
             while (enteringBlog)
             {
-                Console.WriteLine("Please choose the post's Blog:");
+                Console.WriteLine("Please choose the Post's Blog:");
 
                 for (int i = 0; i < blogs.Count; i++)
                 {
@@ -154,9 +155,9 @@ namespace TabloidCLI.UserInterfaceManagers
                     Console.Clear();
                     int choice = int.Parse(input);
                     postBlog = blogs.Find(b => b.Id == choice);
-                    enteringBlog = false;
+                    break;
                 }
-                catch (Exception ex)
+                catch (Exception x)
                 {
                     Console.Clear();
                     Console.WriteLine("Invalid Selection");
@@ -190,13 +191,13 @@ namespace TabloidCLI.UserInterfaceManagers
             }
 
             Console.WriteLine();
-            string newTitle = StringPrompt("New title (blank to leave unchanged): ");
+            string newTitle = StringPrompt("Enter a new title (If no change, just hit enter): ");
             if (!string.IsNullOrWhiteSpace(newTitle))
             {
                 postToEdit.Title = newTitle;
             }
 
-            string newUrl = StringPrompt("New URL (blank to leave unchanged): ");
+            string newUrl = StringPrompt("Enter a new URL (If no change, just hit enter): ");
             if (!string.IsNullOrWhiteSpace(newUrl))
             {
                 postToEdit.Url = newUrl;
@@ -206,10 +207,10 @@ namespace TabloidCLI.UserInterfaceManagers
             while (enteringDate)
             {
                 DateTime newDate = new DateTime();
-                string dateInput = StringPrompt("New post publication date (mm/dd/yyyy) - blank to leave unchanged: ");
+                string dateInput = StringPrompt("Enter a new post publication date (mm/dd/yyyy) (If no change, just hit enter): ");
                 if (string.IsNullOrWhiteSpace(dateInput))
                 {
-                    enteringDate = false;
+                    break;
                 }
                 else
                 {
@@ -217,9 +218,9 @@ namespace TabloidCLI.UserInterfaceManagers
                     {
                         newDate = DateTime.Parse(dateInput);
                         postToEdit.PublishDateTime = newDate;
-                        enteringDate = false;
+                        break;
                     }
-                    catch (Exception ex)
+                    catch (Exception x)
                     {
                         Console.Clear();
                         Console.WriteLine("Invalid date");
@@ -231,7 +232,7 @@ namespace TabloidCLI.UserInterfaceManagers
             List<Author> authors = _authorRepository.GetAll();
             while (enteringAuthor)
             {
-                Console.WriteLine("Please choose the post's Author (blank to leave unchanged):");
+                Console.WriteLine("Please choose a new author (If no change, just hit enter): ");
 
                 for (int i = 0; i < authors.Count; i++)
                 {
@@ -242,7 +243,7 @@ namespace TabloidCLI.UserInterfaceManagers
                 string input = StringPrompt("> ");
                 if (string.IsNullOrWhiteSpace(input))
                 {
-                    enteringAuthor = false;
+                    break;
                 }
                 else
                 {
@@ -251,9 +252,9 @@ namespace TabloidCLI.UserInterfaceManagers
                         Console.Clear();
                         int choice = int.Parse(input);
                         postToEdit.Author = authors.Find(a => a.Id == choice);
-                        enteringAuthor = false;
+                        break;
                     }
-                    catch (Exception ex)
+                    catch (Exception x)
                     {
                         Console.Clear();
                         Console.WriteLine("Invalid Selection");
@@ -265,7 +266,7 @@ namespace TabloidCLI.UserInterfaceManagers
             List<Blog> blogs = _blogRepository.GetAll();
             while (enteringBlog)
             {
-                Console.WriteLine("Please choose the post's Blog (blank to leave unchanged):");
+                Console.WriteLine("Please choose a new blog (If no change, just hit enter): ");
 
                 for (int i = 0; i < blogs.Count; i++)
                 {
@@ -288,7 +289,7 @@ namespace TabloidCLI.UserInterfaceManagers
                         postToEdit.Blog = blogs.Find(b => b.Id == choice);
                         enteringBlog = false;
                     }
-                    catch (Exception ex)
+                    catch (Exception x)
                     {
                         Console.Clear();
                         Console.WriteLine("Invalid Selection");
@@ -339,7 +340,7 @@ namespace TabloidCLI.UserInterfaceManagers
                 int choice = int.Parse(input);
                 return posts[choice - 1];
             }
-            catch (Exception ex)
+            catch (Exception x)
             {
                 Console.Clear();
                 Console.WriteLine("Invalid Selection");
