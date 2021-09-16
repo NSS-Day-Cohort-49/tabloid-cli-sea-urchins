@@ -135,9 +135,24 @@ namespace TabloidCLI.Repositories
             using (SqlConnection conn = Connection)
             {
                 conn.Open();
-                using(SqlCommand cmd = conn.CreateCommand())
+
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE n from Note n
+                                        INNER JOIN Post p ON n.PostId = p.Id
+                                        WHERE BlogId = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+                using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"DELETE from BlogTag WHERE BlogId = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE from Post WHERE BlogId = @id";
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.ExecuteNonQuery();
                 }

@@ -64,7 +64,6 @@ namespace TabloidCLI.UserInterfaceManagers
         private void Add()
         {
             List<Post> posts = _postRepository.GetAll();
-            Post poster = null;
 
             Console.WriteLine("New ");
             Note note = new Note();
@@ -74,9 +73,6 @@ namespace TabloidCLI.UserInterfaceManagers
 
             Console.Write("Content: ");
             note.Content = Console.ReadLine();
-
-            Console.Write("Note creation date (mm/dd/yyyy): "); ;
-            note.CreateDateTime = DateTime.Parse(Console.ReadLine());
 
                 Console.WriteLine("Choose a Post: ");
 

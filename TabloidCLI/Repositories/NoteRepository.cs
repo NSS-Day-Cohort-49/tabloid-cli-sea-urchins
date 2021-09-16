@@ -100,12 +100,11 @@ namespace TabloidCLI.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"INSERT INTO Note (Title, Content, CreateDateTime, PostId )
-                                        VALUES (@title, @content, @createDateTime, @postId)";
+                                        VALUES (@title, @content, GETDATE(), @postId)";
 
 
                     cmd.Parameters.AddWithValue("@title", note.Title);
                     cmd.Parameters.AddWithValue("@content", note.Content);
-                    cmd.Parameters.AddWithValue("@createDateTime", note.CreateDateTime);
                     cmd.Parameters.AddWithValue("@postId", note.PostId);
 
                     cmd.ExecuteNonQuery();
