@@ -8,6 +8,8 @@ namespace TabloidCLI.UserInterfaceManagers
 {
     class PostManager : IUserInterfaceManager
     {
+        private const string CONNECTION_STRING =
+            @"Data Source=localhost\SQLEXPRESS;Database=TabloidCLI;Integrated Security=True";
         private IUserInterfaceManager _parentUI;
         private PostRepository _postRepository;
         private AuthorRepository _authorRepository;
@@ -34,6 +36,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine(" 0) Return to Main Menu");
 
             Console.Write("> ");
+            
             string choice = Console.ReadLine();
             Console.Clear();
             switch (choice)
@@ -61,7 +64,7 @@ namespace TabloidCLI.UserInterfaceManagers
                     Remove();
                     return this;
                 case "6":
-                    throw new NotImplementedException();
+                    return new NoteManager(this, CONNECTION_STRING); ;
                 case "0":
                     return _parentUI;
                 default:
