@@ -26,6 +26,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine(" 2) Add Blog");
             Console.WriteLine(" 3) Remove Blog");
             Console.WriteLine(" 4) Edit Blog");
+            Console.WriteLine(" 5) View Blog Details");
             Console.WriteLine(" 0) Return to main menu");
 
             Console.WriteLine("> ");
@@ -46,6 +47,16 @@ namespace TabloidCLI.UserInterfaceManagers
                 case "4":
                     Edit();
                     return this;
+                case "5":
+                    Blog blog = Choose();
+                    if (blog == null)
+                    {
+                        return this;
+                    }
+                    else
+                    {
+                        return new BlogDetailManager(this, _connectionString, blog.Id);
+                    }
                 default:
                     Console.WriteLine("Invalid Selection");
                     return this;
