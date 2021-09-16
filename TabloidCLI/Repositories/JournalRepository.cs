@@ -45,7 +45,41 @@ namespace TabloidCLI
 
         public Journal Get(int id)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT j.Id AS JournalId,
+		                                    j.Title,
+		                                    j.Content,
+		                                    j.CreateDateTime
+                                    FROM Journal j
+                                    WHERE j.id = @id;";
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    Journal journal = null;
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (journal == null)
+                        {
+                            journal = new Journal()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("JournalId")),
+                                Title = reader.GetString(reader.GetOrdinal("Title")),
+                                Content = reader.GetString(reader.GetOrdinal("Content")),
+                                CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime"))
+                            };
+                        }
+
+                    }
+                        reader.Close();
+
+                        return journal;
+                }
+            }
         }
 
         public void Insert(Journal journal)
@@ -55,12 +89,40 @@ namespace TabloidCLI
 
         public void Update(Journal journal)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE Journal " +
+                        "SET Title = @title, " +
+                        "Content = @content, " +
+                        "CreateDateTime = @createDateTime " +
+                        "WHERE id = @id; ";
+                    cmd.Parameters.AddWithValue("@title", journal.Title);
+                    cmd.Parameters.AddWithValue("@content", journal.Content);
+                    cmd.Parameters.AddWithValue("@createDateTime", journal.CreateDateTime);
+                    cmd.Parameters.AddWithValue("@id", journal.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE FROM Journal WHERE id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
+
     }
 }
