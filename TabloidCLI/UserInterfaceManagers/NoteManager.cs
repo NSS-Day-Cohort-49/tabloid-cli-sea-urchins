@@ -70,6 +70,13 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.Write("Content: ");
             note.Content = Console.ReadLine();
 
+            Console.Write("Note creation date (mm/dd/yyyy): "); ;
+            note.CreateDateTime = DateTime.Parse(Console.ReadLine());
+
+            Console.Write("Post of Note is for: ");
+            note.PostId = int.Parse(Console.ReadLine());
+
+
             _noteRepository.Insert(note);
         }
 
