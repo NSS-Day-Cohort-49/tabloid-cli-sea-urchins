@@ -55,10 +55,10 @@ namespace TabloidCLI.UserInterfaceManagers
 
                     // output to the console using the requested colors (assuming they were valid)
 
-                    Console.WriteLine("Hello World!");
                     Console.WriteLine("Press any key to return to the menu...");
                     Console.ReadKey();
                     Console.Clear();
+
                     return this;
                 case "0":
                     Console.WriteLine("Good bye");
